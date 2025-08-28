@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global: remove focus outlines and Tailwind ring halos */
+@layer base {
+  *:focus,
+  *:focus-visible {
+    outline: none !important;
+    /* neutralize Tailwind ring shadows */
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    box-shadow: none !important;
+  }
+}
+
+@font-face {
+  font-family: 'CardSymbols';
+  src: url('/CARDC___.TTF') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --card-w: 160px;
+  --card-h: 240px;
+  --card-radius: 10px;
+  --border: 1px solid #bbbbbb;
+  --shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --visible-w: 56px;
+  --rank-size: 36px;
+  --suit-size: 28px;
+  --label-padding: 8px;
+  --label-gap: 10px;
+  --label-height: 66px;
+}
+
+* { 
+  box-sizing: border-box; 
+}
+
+html, body { 
+  height: 100%; 
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans SC', sans-serif;
+  background: #f8fafc;
+  color: #1f2937;
+}
+
+/* 自定义下拉选择框样式 */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select:focus {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+select option {
+  padding: 8px 12px;
+  background-color: white;
+  color: #374151;
+  font-size: 14px;
+}
+
+select option:hover {
+  background-color: #f3f4f6;
+}
+
+select option:checked {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* 应用头部样式（已废弃，使用 Tailwind CSS） */
+
+/* 预览区域样式（已废弃，使用 Tailwind CSS） */
+
+.preview-stage {
+  display: inline-block;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.preview-stage.bw {
+  filter: grayscale(100%);
+}
+
+.preview-stage.bw .color-red {
+  color: #9e9e9e !important;
+}
+
+.preview-stage.exporting .card {
+  box-shadow: none !important;
+}
+
+.stack {
+  position: relative;
+  margin-top: calc(var(--label-height) + var(--label-padding));
+}
+
+.card-container {
+  position: absolute;
+  top: 0;
+}
+
+.card {
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: var(--card-radius);
+  border: none;
+  box-shadow: var(--shadow);
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+}
+
+.card.front { 
+  background: #ffffff; 
+}
+
+.card.back {
+  background-color: #ffffff;
+  --pattern-stroke: 1px;
+  box-shadow: var(--shadow);
+}
+
+.card.back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 6px solid #ffffff;
+  border-radius: var(--card-radius);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card.back::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  box-sizing: border-box;
+  border: var(--pattern-stroke) solid #4051b5;
+  border-radius: calc(var(--card-radius) - 6px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card.back .back-pattern {
+  position: absolute;
+  inset: 6px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: calc(var(--card-radius) - 6px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.corner {
+  position: absolute;
+  padding: var(--label-padding);
+}
+
+.corner.top-left { 
+  left: 0; 
+  top: 0; 
+}
+
+.corner.bottom-right { 
+  right: 0; 
+  bottom: 0; 
+}
+
+.corner.rotated { 
+  transform: rotate(180deg); 
+  transform-origin: center; 
+}
+
+.label-col {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  row-gap: 2px;
+  font-weight: 700;
+  font-family: 'CardSymbols', 'Noto Sans SC', 'Source Han Sans SC', 'Noto Sans CJK SC', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  min-height: 74px; /* 确保标签容器有固定高度 */
+}
+
+.rank { 
+  font-size: var(--rank-size); 
+}
+
+.suit { 
+  font-size: var(--suit-size); 
+}
+
+.color-black { 
+  color: #000000; 
+}
+
+.color-red { 
+  color: #d32f2f; 
+}
+
+.external-label {
+  position: absolute;
+  top: calc(var(--label-padding) * -1);
+  transform: translate(0, -100%);
+}
+
+.card.text-card {
+  /* Full-cover diagonal stripes; keep padding/layout unchanged */
+  background: repeating-linear-gradient(
+    45deg,
+    #f5f6f8 0,
+    #f5f6f8 12px,
+    #e9edf3 12px,
+    #e9edf3 24px
+  );
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 6px;
+  box-shadow: var(--shadow);
+}
+
+.card.text-card.is-topmost {
+  border: none;
+  position: relative;
+}
+
+.card.text-card.is-topmost::after {
+  content: none;
+}
+
+.text-content {
+  font-size: 14px;
+  color: #666666;
+  text-align: center;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.4;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
